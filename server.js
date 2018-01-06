@@ -19,6 +19,8 @@ var app = express();
 // Sets an initial port. We"ll use this later in our listener
 var PORT = process.env.PORT || 3000;
 
+// Serve static content from the public directory
+app.use(express.static(process.cwd() + '/public'));
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
