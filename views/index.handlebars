@@ -4,8 +4,15 @@
 
 <ul>
   {{#each burgers}}
-    {{#unless devoured}}
-      {{> burgers/burger-block devoured=true}}
+    {{#unless this.devoured}}
+      <li>
+        {{this.name}}
+
+        <form action="burgers/update/{{this.id}}?_method=PUT" method="POST">
+        <input type="hidden" name="devoured" value="true">
+        <button type="submit">Eat the Burger!</button>        
+        </form>
+      </li>>
     {{/unless}}
   {{/each}}
 </ul>
@@ -14,14 +21,21 @@
 
 <ul>
   {{#each burgers}}
-    {{#if devoured}}
-      {{> burgers/burger-block devoured=false}}
+    {{#if this.devoured}}
+    <li>
+      {{this.name}}
+
+      <form action="burgers/update/{{this.id}}?_method=PUT" method="POST">
+      <input type="hidden" name="devoured" value="false">
+      <button type="submit">So full.</button>
+      </form>
+    </li>
     {{/if}}
   {{/each}}
 </ul>
 
 <h2>Add a Burger</h2>
-<form class="create-form">
+<form class="create-update-form" action="burgers/create" method="POST">
 
   <div class="form-group">
     <label for="ca">Name Your Burger Name:</label>
