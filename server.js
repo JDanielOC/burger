@@ -5,41 +5,47 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
+var exphbs = require('express-handlebars');
 
 // ==============================================================================
 // EXPRESS CONFIGURATION
-// This sets up the basic properties for our express server
 // ==============================================================================
 
 // Tells node that we are creating an "express" server
 var app = express();
 
-// var apiRoutes = require("./routes/apiRoutes");
-// var htmlRoutes = require("./routes/htmlRoutes");
-// Sets an initial port. We"ll use this later in our listener
+// Sets an initial port. We'll use this later in our listener
 var PORT = process.env.PORT || 3000;
 
 // Serve static content from the public directory
 app.use(express.static(process.cwd() + '/public'));
 // Sets up the Express app to handle data parsing
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(bodyParser.json());
+app.use(methodOverride('_method'));
+app.engine('handlebars', exphbs({
+    defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
 
 // ================================================================================
 // ROUTER
 // The below points our server to a series of "route" files.
 // These routes give our server a "map" of how to respond when users visit or request data from various URLs.
 // ================================================================================
+
+
+var routes = require('./controllers/burgers_controller.js');
 // app.use("/api", apiRoutes);
-// app.use("/", htmlRoutes);
+app.use("/", routes);
 
 
 // =============================================================================
 // LISTENER
-// The below code effectively "starts" our server
 // =============================================================================
 
 app.listen(PORT, function () {
     console.log("App listening on PORT: " + PORT);
 });
-
