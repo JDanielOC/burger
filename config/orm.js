@@ -23,8 +23,6 @@ function objToSql(ob) {
     return arr.toString();
 }
 
-
-
 var orm = {
     selectAll: function (tableInput, cb) {
         var queryString = 'SELECT * FROM ' + tableInput + ';';
@@ -74,7 +72,6 @@ var orm = {
     }
 
 };
-
 
 // Export the orm object for the model (burger.js).
 module.exports = orm;
