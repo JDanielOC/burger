@@ -2,14 +2,20 @@
 var connection = require('../config/connection.js');
 
 // Helper function to convert object key/value pairs to SQL syntax
+function printQuestionMarks(num) {
+    var arr = [];
+
+    for (var i = 0; i < num; i++) {
+        arr.push('?');
+    }
+    return arr.toString();
+}
 function objToSql(ob) {
     var arr = [];
 
     // loop through the keys and push the key/value as a string int arr
     for (var key in ob) {
-        var value = ob[key];
-        // check to skip hidden properties
-        if (Object.hasOwnProperty.call(ob, key)) {
+        if (ob.hasOwnProperty(key)) {
             // if string with spaces, add quotations)
             if (typeof value === "string" && value.indexOf(" ") >= 0) {
                 value = "'" + value + "'";
@@ -24,7 +30,7 @@ function objToSql(ob) {
 }
 
 var orm = {
-    selectAll: function (tableInput, cb) {
+    all: function (tableInput, cb) {
         var queryString = 'SELECT * FROM ' + tableInput + ';';
         connection.query(queryString, function (err, result) {
             if (err) {
@@ -33,15 +39,15 @@ var orm = {
             cb(result);
         });
     },
-    insertOne: function (table, cols, vals, cb) {
-        var queryString = "INSERT INTO " + table;
+    create: function (table, cols, vals, cb) {
+        var queryString = 'INSERT INTO ' + table;
 
-        queryString += " (";
+        queryString += ' (';
         queryString += cols.toString();
-        queryString += ") ";
-        queryString += "VALUES (";
+        queryString += ') ';
+        queryString += 'VALUES (';
         queryString += printQuestionMarks(vals.length);
-        queryString += ") ";
+        queryString += ') ';
 
         console.log(queryString);
 
@@ -53,12 +59,12 @@ var orm = {
             cb(result);
         });
     },
-    updateOne: function (table, objColVals, condition, cb) {
-        var queryString = "UPDATE " + table;
+    update: function (table, objColVals, condition, cb) {
+        var queryString = 'UPDATE ' + table;
 
-        queryString += " SET ";
+        queryString += ' SET ';
         queryString += objToSql(objColVals);
-        queryString += " WHERE ";
+        queryString += ' WHERE ';
         queryString += condition;
 
         console.log(queryString);
