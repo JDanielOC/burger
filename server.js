@@ -17,13 +17,12 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 
 // Serve static content from the public directory
-app.use(express.static(process.cwd() + '/public'));
+app.use(express.static('public'));
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-app.use(bodyParser.json());
-app.use(methodOverride('_method'));
+
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
 }));
@@ -37,7 +36,7 @@ app.set('view engine', 'handlebars');
 
 
 var routes = require('./controllers/burgers_controller.js');
-// app.use("/api", apiRoutes);
+
 app.use("/", routes);
 
 
