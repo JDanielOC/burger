@@ -19,31 +19,25 @@ router.get('/index', function (req, res) {
     });
 });
 
-router.post('/api/burgers', function (req, res) {
+router.post('/burgers/insertOne', function (req, res) {
     burger.insertOne([
         'name', 'devoured'
     ], [
-            req.body.name, req.body.sleepy
-        ], function (result) {
-            // Send back the ID of the new quote
-            res.json({ id: result.insertId });
+            req.body.name, false
+        ], function () {
+            res.redirect('/index');
         });
 });
 
-router.put('/api/burgers/:id', function (req, res) {
+router.put('/burgers/updateOne/:id', function (req, res) {
     var condition = 'id = ' + req.params.id;
 
     console.log('condition', condition);
 
     burger.updateOne({
         devoured: req.body.devoured
-    }, condition, function(result) {
-            if (result.changedRows == 0) {
-                // If no rows were changed, then the ID must not exist, so 404
-                return res.status(404).end();
-            } else {
-                res.status(200).end();
-            }
+    }, condition, function() {
+            res.redirect('/index');
         });
 });
 
