@@ -35,7 +35,7 @@ router.put('/burgers/updateOne/:id', function (req, res) {
     console.log('condition', condition);
 
     burger.updateOne({
-        devoured: true
+        devoured: req.body.devoured
     }, condition, function() {
             res.redirect('/index');
         });
