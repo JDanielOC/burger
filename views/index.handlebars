@@ -27,9 +27,9 @@
         <li>
           {{this.name}}
 
-          <form action="burgers/updateOne/{{this.id}}?_method=PUT" method="POST">
-            <input type="hidden" name="devoured" value="true">
-            <button type="submit">Eat the Burger!</button>
+          <form action='burgers/updateOne/{{this.id}}?_method=PUT' method='POST'>
+            <input type='hidden' name='devoured' value='true'>
+            <button type='submit'>Eat the Burger!</button>
           </form>
         </li>
         {{/unless}} {{/each}}
