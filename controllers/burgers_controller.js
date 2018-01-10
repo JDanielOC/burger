@@ -33,7 +33,12 @@ router.put('/burgers/updateOne/:id', function (req, res) {
     var condition = 'id = ' + req.params.id;
 
     console.log('condition', condition);
-
+    console.log(req.body);
+    if(req.body.devoured === 'true') {
+        var devoured = true;
+    } else {
+        var devoured = false;
+    }
     burger.updateOne({
         devoured: req.body.devoured
     }, condition, function() {

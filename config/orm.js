@@ -15,6 +15,8 @@ function objToSql(ob) {
 
     // loop through the keys and push the key/value as a string int arr
     for (var key in ob) {
+        // ob[key] = ob.key
+        var value = ob[key];
         if (ob.hasOwnProperty.call(ob, key)) {
             // if string with spaces, add quotations)
             if (typeof value === "string" && value.indexOf(" ") >= 0) {
@@ -34,7 +36,7 @@ var orm = {
         var queryString = 'SELECT * FROM ' + tableInput + ';';
         connection.query(queryString, function(err, result) {
             if (err) {
-                throw err;
+                console.log(err);
             }
             cb(result);
         });
@@ -62,6 +64,7 @@ var orm = {
     },
     // updateOne changes from devoured false to devoured true
     updateOne: function(table, objColVals, condition, cb) {
+        console.log(typeof objColVals.devoured);
         var queryString = 'UPDATE ' + table;
 
         queryString += ' SET ';
