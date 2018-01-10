@@ -12,6 +12,9 @@ var exphbs = require('express-handlebars');
 
 // Tells node that we are creating an "express" server
 var app = express();
+// override with POST having ?_method=PUT(or DELETE)
+app.use(methodOverride('_method'));
+
 
 // Sets an initial port. We'll use this later in our listener
 var PORT = process.env.PORT || 3000;
